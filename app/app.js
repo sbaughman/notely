@@ -1,11 +1,12 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('notely', [
+var app = angular.module('notely', [
   'ngRoute',
   'notely.notes',
-  'notely.version'
-]).
-config(['$routeProvider', function($routeProvider) {
+  'notely.version',
+]);
+
+app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/notes'});
 }]);
