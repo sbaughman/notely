@@ -34,13 +34,16 @@
         </header>
       </div>
     </div>
-    <div class="container">
+    <div class="container" ng-controller="NotesController">
       <div class="row">
         <div class="col-xs-4">
-          <nav id="sidebar" ng-controller="NotesController">
+
+          <nav id="sidebar">
             <div class="well">
               <ul>
-                <li ng-repeat="note in notes">{{ note.title }}</li>
+                <li ng-repeat="note in notes">
+                  {{ note.title }}
+                </li>
               </ul>
             </div>
           </nav>
