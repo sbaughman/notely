@@ -20,6 +20,18 @@ noteApp.controller('NotesController', ['$scope', 'NotesBackend', function($scope
     $scope.notes = notesData;
   });
 
+  self.findNoteById = function(noteId) {
+    for (var i = 0; i < $scope.notes.length; i ++) {
+      if ($scope.notes[i].id === noteId) {
+        return $scope.notes[i];
+      }
+    }
+  };
+
+  self.cloneNote = function(note) {
+    return JSON.parse(JSON.stringify(note));
+  };
+
   $scope.commit = function() {
     // call postNote function with callback
     NotesBackend.postNote($scope.note, function(notesData) {
