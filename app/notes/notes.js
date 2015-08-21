@@ -57,10 +57,12 @@ noteApp.controller('NotesController', ['$scope', 'NotesBackend', function($scope
 
   $scope.loadNote = function(note) {
     $scope.note = self.cloneNote(note);
+    $scope.$broadcast('noteLoaded');
   };
 
   $scope.clearNote = function() {
     $scope.note = {};
+    $scope.$broadcast('noteCleared');
   };
 
   NotesBackend.fetchNotes(self.assignNotes);

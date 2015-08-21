@@ -10,3 +10,11 @@ var app = angular.module('notely', [
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/notes'});
 }]);
+
+app.directive('focusOn', function() {
+  return function(scope, el, attr) {
+    scope.$on(attr.focusOn, function(ev) {
+      el[0].focus();
+    });
+  };
+});
