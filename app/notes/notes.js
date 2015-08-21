@@ -15,13 +15,14 @@ noteApp.controller('NotesController', ['$scope', 'NotesBackend', function($scope
   var self = this;
   $scope.note = {};
   $scope.notes = [];
-  // call fetchNotes function with callback so that it returns a populated 'notes' array
-  NotesBackend.fetchNotes(function(notesData) {
-    $scope.notes = notesData;
-  });
+
+  self.assignNotes = function(notes, note) {
+    $scope.notes = notes;
+    $scope.note = JSON.parse(JSON.stringify(note));
+  };
 
   self.findNoteById = function(noteId) {
-    for (var i = 0; i < $scope.notes.length; i ++) {
+    for (var i = 0; i < $scope.notes.length; i++) {
       if ($scope.notes[i].id === noteId) {
         return $scope.notes[i];
       }
@@ -42,16 +43,11 @@ noteApp.controller('NotesController', ['$scope', 'NotesBackend', function($scope
   };
 
   $scope.commit = function() {
-    // call postNote function with callback
     if ($scope.note.id) {
-      NotesBackend.putNote($scope.note, function(notesData) {
-        $scope.notes = notesData;
-      });
+        NotesBackend.putNote($scope.note, self.assignNotes);
     }
     else {
-      NotesBackend.postNote($scope.note, function(notesData) {
-        $scope.notes = notesData;
-      });
+      NotesBackend.postNote($scope.note, self.assignNotes);
     }
   };
 
@@ -62,4 +58,10 @@ noteApp.controller('NotesController', ['$scope', 'NotesBackend', function($scope
   $scope.loadNote = function(note) {
     $scope.note = self.cloneNote(note);
   };
+
+  $scope.clearNote = function() {
+    $scope.note = {};
+  };
+
+  NotesBackend.fetchNotes(self.assignNotes);
 }]);
