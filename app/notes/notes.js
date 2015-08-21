@@ -51,6 +51,13 @@ noteApp.controller('NotesController', ['$scope', 'NotesBackend', function($scope
     }
   };
 
+  $scope.deleteNote = function() {
+    NotesBackend.deleteNote($scope.note, function(notes, note) {
+      self.assignNotes(notes, note);
+      $scope.clearNote();
+    });
+  };
+
   $scope.hasNotes = function() {
     return $scope.notes.length > 0;
   };
