@@ -32,11 +32,27 @@ noteApp.controller('NotesController', ['$scope', 'NotesBackend', function($scope
     return JSON.parse(JSON.stringify(note));
   };
 
+  $scope.buttonText = function() {
+    if ($scope.note.id) {
+      return "Update Note";
+    }
+    else {
+      return "Create Note";
+    }
+  };
+
   $scope.commit = function() {
     // call postNote function with callback
-    NotesBackend.postNote($scope.note, function(notesData) {
-      $scope.notes = notesData;
-    });
+    if ($scope.note.id) {
+      NotesBackend.putNote($scope.note, function(notesData) {
+        $scope.notes = notesData;
+      });
+    }
+    else {
+      NotesBackend.postNote($scope.note, function(notesData) {
+        $scope.notes = notesData;
+      });
+    }
   };
 
   $scope.hasNotes = function() {
